@@ -14,6 +14,22 @@ session.headers.update({
 def mil_seconds():
     return int(round(time.time() * 1000))
 
+# MAIN
+# gets proxies and websites in a text file, rather than hard-coding them
+with open("proxies.txt") as proxies_text:
+    proxies = proxies_text.read().splitlines()
+with open("sitelist.txt") as sitelist_text:
+	sites = sitelist_text.read().splitlines()
+
+if proxies == []:
+    print('You did not load proxies. Check your proxies.txt file!')
+    exit()
+else: 
+	print('Currently loaded:', proxies)
+good_proxies = []
+
+print('Testing on sites ', sites)
+
 def proxyChecker(proxy):
     session.proxies.update({
         'http': 'http://' + proxy,
@@ -27,31 +43,16 @@ def proxyChecker(proxy):
 	            print(proxy, ' is not a good proxy.')
 	        else:
 	            print('[{}] on site {} ---- {} ms'.format(proxy, url, mil_seconds() - start_time))
+	            good_proxies.append(proxy)
         except: # broad exceptions are bad but who cares
-        	print('Bad Proxy {} on {}'.format(proxy, url))
+        	print('Bad Proxy {} on site {}'.format(proxy, url))
 
-# MAIN
-# gets proxies in a text file, rather than hard-coding them
-with open("proxies.txt") as proxies_text:
-    proxies = proxies_text.read().splitlines()
+if __name__ == '__main__':
+	jobs = []
+	for p in proxies:
+	    m = multiprocessing.Process(target=proxyChecker, args=(p,))
+	    jobs.append(m)
+	for j in jobs:
+	    j.start()
+	print(good_proxies)
 
-
-if proxies == []:
-    print('You did not load proxies. Check your proxies.txt file!')
-    exit()
-else: 
-	print('Currently loaded:', proxies)
-
-# input the sites you want to test against here.
-sites = [
-    'http://msn.com/']
-print('Testing on sites ', sites)
-
-
-jobs = []
-for p in proxies:
-    m = multiprocessing.Process(target=proxyChecker, args=(p,))
-    jobs.append(m)
-
-for j in jobs:
-    j.start()
