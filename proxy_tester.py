@@ -54,5 +54,4 @@ if __name__ == '__main__':
 	    jobs.append(m)
 	for j in jobs:
 	    j.start()
-	print(good_proxies)
 
