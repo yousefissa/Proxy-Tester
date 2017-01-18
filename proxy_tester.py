@@ -23,7 +23,6 @@ def proxyChecker(proxy):
         start_time = mil_seconds()
         try:
 	        response = session.get(url)
-	        print(response.status_code)
 	        if response.status_code != 200:
 	            print(proxy, ' is not a good proxy.')
 	        else:
@@ -36,18 +35,16 @@ def proxyChecker(proxy):
 with open("proxies.txt") as proxies_text:
     proxies = proxies_text.read().splitlines()
 
-print('Currently loaded:', proxies)
 
 if proxies == []:
     print('You did not load proxies. Check your proxies.txt file!')
     exit()
+else: 
+	print('Currently loaded:', proxies)
 
 # input the sites you want to test against here.
 sites = [
-    'http://google.com/',
-    'http://www.footlocker.com/',
-    'http://www.eastbay.com/',
-    'http://www.supremenewyork.com/shop']
+    'http://msn.com/']
 print('Testing on sites ', sites)
 
 
