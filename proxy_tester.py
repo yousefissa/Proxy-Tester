@@ -60,13 +60,14 @@ if __name__ == '__main__':
     good_proxies_set, bad_proxies_set = set(good_proxies), set(bad_proxies)
 
     with open('proxy_results.txt', 'a') as proxy_results:
+        proxy_results.write('\nTested on {}\n'.format(sites))
         if good_proxies_set:
-            proxy_results.write('\n\nGood proxies: \n')
+            proxy_results.write('\nGood proxies: \n')
             for proxy in good_proxies_set:
                 proxy_results.write('{}\n'.format(proxy))
         if bad_proxies_set:
             proxy_results.write('Bad proxies: \n')
             for proxy in bad_proxies_set:
                 proxy_results.write('{}\n'.format(proxy))
-                
+
     print('\n\nGood proxies: {}'.format(good_proxies_set))
