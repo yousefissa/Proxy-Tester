@@ -8,7 +8,7 @@ Good and bad proxies will be inputted to the proxy_results.txt file.
 
 #### Proxies.txt
 
-Input your proxies into the proxies.txt file in an ip:port format.
+Input your proxies into the proxies.txt file in an ip:port format or a ip:port:user:pass format. No other formats are supported.
 
 #### Sitelist.xt
 
