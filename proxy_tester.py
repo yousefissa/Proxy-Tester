@@ -23,10 +23,10 @@ if not proxies:
     print('You did not load proxies. Check your proxies.txt file!')
     exit()
 else: 
-	print('Currently loaded: {}'.format(proxies))
+	print('\nCurrently loaded: {}\n\n'.format(proxies))
 good_proxies, bad_proxies = [], []
 
-print('Testing on sites ', sites)
+print('Testing on sites {}\n\n'.format(sites))
 
 def proxyChecker(proxy):
     session.proxies.update({
@@ -51,12 +51,12 @@ if __name__ == '__main__':
 		proxyChecker(p)
 	good_proxies_set, bad_proxies_set = set(good_proxies), set(bad_proxies)
 
-	with open('proxy_results.txt', 'w') as proxy_results:
-		proxy_results.write('Good proxies: \n')
+	with open('proxy_results.txt', 'a') as proxy_results:
+		proxy_results.write('\n\nGood proxies: \n')
 		for proxy in good_proxies_set:
-			proxy_results.write(proxy)
+			proxy_results.write('{}\n'.format(proxy))
 		proxy_results.write('Bad proxies: \n')
 		for proxy in bad_proxies_set:
-			proxy_results.write(proxy)
-	print(good_proxies)
+			proxy_results.write('{}\n'.format(proxy))
+	print('\n\nGood proxies: {}'.format(good_proxies_set))
 
