@@ -1,10 +1,8 @@
 # better version
-# Import github.com/yousefissa
-# @devmykal helped me bc im a nut
+# github.com/yousefissa, twitter @yousefnu
 
-import time
+from time import time
 from requests import Session
-import multiprocessing
 
 session = Session()
 session.headers.update({
@@ -12,21 +10,21 @@ session.headers.update({
                 '(KHTML, like Gecko) Chrome/56.0.2924.28 Safari/537.36'})
 
 def mil_seconds():
-    return int(round(time.time() * 1000))
+    return int(round(time() * 1000))
 
 # MAIN
 # gets proxies and websites in a text file, rather than hard-coding them
-with open("proxies.txt") as proxies_text:
-    proxies = proxies_text.read().splitlines()
-with open("sitelist.txt") as sitelist_text:
+with open('proxies.txt') as proxies_text, open('sitelist.txt') as sitelist_text:
+	proxies = proxies_text.read().splitlines()
 	sites = sitelist_text.read().splitlines()
 
-if proxies == []:
+# checks if list is empty
+if not proxies:
     print('You did not load proxies. Check your proxies.txt file!')
     exit()
 else: 
-	print('Currently loaded:', proxies)
-good_proxies = []
+	print('Currently loaded: {}'.format(proxies))
+good_proxies, bad_proxies = [], []
 
 print('Testing on sites ', sites)
 
@@ -40,18 +38,25 @@ def proxyChecker(proxy):
         try:
 	        response = session.get(url)
 	        if response.status_code != 200:
-	            print(proxy, ' is not a good proxy.')
+	            print('{} is not a good proxy.'.format(proxy))
+	            bad_proxies.append(proxy)
 	        else:
-	            print('[{}] on site {} ---- {} ms'.format(proxy, url, mil_seconds() - start_time))
+	            print('{} on site {} ---- {} ms'.format(proxy, url, mil_seconds() - start_time))
 	            good_proxies.append(proxy)
         except: # broad exceptions are bad but who cares
         	print('Bad Proxy {} on site {}'.format(proxy, url))
 
 if __name__ == '__main__':
-	jobs = []
 	for p in proxies:
-	    m = multiprocessing.Process(target=proxyChecker, args=(p,))
-	    jobs.append(m)
-	for j in jobs:
-	    j.start()
+		proxyChecker(p)
+	good_proxies_set, bad_proxies_set = set(good_proxies), set(bad_proxies)
+
+	with open('proxy_results.txt', 'w') as proxy_results:
+		proxy_results.write('Good proxies: \n')
+		for proxy in good_proxies_set:
+			proxy_results.write(proxy)
+		proxy_results.write('Bad proxies: \n')
+		for proxy in bad_proxies_set:
+			proxy_results.write(proxy)
+	print(good_proxies)
 
