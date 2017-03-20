@@ -51,7 +51,7 @@ def proxyChecker(proxy):
                 print(
                     '{} on site {} ---- {} ms'.format(proxy, url, mil_seconds() - start_time))
                 good_proxies.append(proxy)
-        except:  # broad exceptions are bad but who cares
+        except:  # broad exceptions are bad
             print('Bad Proxy {} on site {}'.format(proxy, url))
 
 if __name__ == '__main__':
@@ -69,5 +69,7 @@ if __name__ == '__main__':
             proxy_results.write('Bad proxies: \n')
             for proxy in bad_proxies_set:
                 proxy_results.write('{}\n'.format(proxy))
-
-    print('\n\nGood proxies: {}'.format(good_proxies_set))
+    if good_proxies_set:
+        print('\n\nGood proxies: {}'.format(good_proxies_set))
+    else:
+        print('\n\nNo good proxies.')
