@@ -38,7 +38,7 @@ def proxyChecker(proxy):
             'https': 'https://{}:{}@{}:{}'.format(user, passw, ip, port)
         }
     except IndexError:
-        proxies = {'http': 'http://:' + proxy, 'https': 'https://:' + proxy}
+        proxies = {'http': 'http://' + proxy, 'https': 'https://' + proxy}
 
     for url in sites:
         start_time = mil_seconds()
