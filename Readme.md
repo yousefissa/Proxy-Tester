@@ -13,3 +13,8 @@ Input your proxies into the proxies.txt file in an ip:port format or a ip:port:u
 #### Sitelist.xt
 
 Input your sitelist into the sitelist.txt file in the http://website.com/ format.
+
+#### Todo:
+
+- Add proxy timeout feature.
+- Add GUI.
